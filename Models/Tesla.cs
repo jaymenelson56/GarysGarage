@@ -1,12 +1,13 @@
 namespace Garage;
 
-public class Tesla : Vehicle  // Electric car
+public class Tesla : Vehicle  , IElecticVehicle
 {
     public double BatteryKWh { get; set; }
+    public double CurrentChargePercentage { get; set; }
 
     public void ChargeBattery()
     {
-        // method definition omitted
+        CurrentChargePercentage = 100;
     }
     public override void Drive()
     {

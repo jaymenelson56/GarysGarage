@@ -1,49 +1,51 @@
 using Garage;
-            
-Zero fxs = new Zero();
-Tesla modelS = new Tesla();
-Cessna mx410 = new Cessna();
 
-fxs.Drive();
-modelS.Drive();
-mx410.Drive();
+Zero fxs = new Zero { CurrentChargePercentage = 50 };
+Zero fx = new Zero { CurrentChargePercentage = 60 };
+Tesla modelS = new Tesla { CurrentChargePercentage = 70 };
 
-List<Vehicle> vehicles = new List<Vehicle>()
-{
-    new Tesla()
-    {
-        MainColor ="Red",
-        MaximumOccupancy = 5,
-        BatteryKWh = 75.0
-    },
-    new Ram()
-    {
-        MainColor = "Blue",
-        MaximumOccupancy = 3,
-        FuelCapacity = 20.0
-    },
-    new Cessna()
-    {
-        MainColor = "White",
-        MaximumOccupancy = 2,
-        FuelCapacity = 100.0
-    },
-    new Zero()
-    {
-        MainColor = "Black",
-        MaximumOccupancy = 1,
-        BatteryKWh = 30.0
-    }
+List<IElecticVehicle> electricVehicles = new List<IElecticVehicle>() {
+fx, fxs, modelS
 };
 
-foreach (var vehicle in vehicles)
+Console.WriteLine("Electric Vehicles");
+foreach (IElecticVehicle ev in electricVehicles)
 {
-    vehicle.Drive();
-    vehicle.Turn();
-    vehicle.Stop();
-    Console.WriteLine("");
+    Console.WriteLine($"{ev.CurrentChargePercentage}");
+}
+
+foreach (IElecticVehicle ev in electricVehicles)
+{
+    ev.ChargeBattery();
+}
+
+foreach (IElecticVehicle ev in electricVehicles)
+{
+    Console.WriteLine($"{ev.CurrentChargePercentage}");
+}
+
+Ram rammy = new Ram { CurrentTankPercentage = 30};
+Cessna Cessie = new Cessna {CurrentTankPercentage = 40 };
+
+List<IGasVehicle> gasVehicles = new List<IGasVehicle>() {
+rammy, Cessie
 };
 
+Console.WriteLine("Gas Vehicles");
+foreach (IGasVehicle gv in gasVehicles)
+{
+    Console.WriteLine($"{gv.CurrentTankPercentage}");
+}
+
+foreach(IGasVehicle gv in gasVehicles)
+{
+    gv.RefuelTank();
+}
+
+foreach(IGasVehicle gv in gasVehicles)
+{
+    Console.WriteLine($"{gv.CurrentTankPercentage}");
+}
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
